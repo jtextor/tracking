@@ -1,6 +1,4 @@
 
-fpat = 'banded/unreg/%04d.png'
-opat = 'banded/reg/%04d.png'
 
 N=100
 sc=.5

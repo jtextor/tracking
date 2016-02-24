@@ -1,14 +1,12 @@
 #!/bin/bash
 
-mkdir "${PWD##*/}-Converted"
-for i in *.tif
-do sips -s format png "${i}" --out "${PWD##*/}-Converted/${i%tif}png"
+i=1
+
+while [ -d input/$i ] ; do
+	mkdir input/$i-Converted
+	for f in input/$i/*.tif ; do
+		PNGFILE=$(basename $f .tif).png
+		echo convert $f input/$i-Converted/${PNGFILE##*@}
+	done
+	i=$((i+1))
 done
-
-for f in "${PWD##*/}-Converted"/*.png
-do
-mv "$f" "${PWD##*/}-Converted/${f##*@}"
-done
-
-mv "${PWD##*/}-Converted" ../
-
