@@ -5,9 +5,8 @@ i=1
 while [ -d input/$i ] ; do
 
 mkdir -p input/$i-Averaged
-
-echo python averageImg.py "input/$i-Registered/%04d.png" "input/$i-Averaged/%04d.png"
-
+python averageImg.py "input/$i-Registered/%04d.png" "input/$i-Averaged/%04d.png"
 i=$((i+1))
+exit
   
 done

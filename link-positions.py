@@ -3,6 +3,7 @@ from scipy import spatial
 from functools import partial
 
 filename = argv[1]
+print filename
 radius_threshold = float( argv[2] )
 
 positions = {}

@@ -1,18 +1,21 @@
-import cv2
-from scipy import misc,ndimage
+#import cv2
+from scipy import misc,ndimage # image processing 
 from sys import argv
-import numpy
+import numpy # all arrays and matrices
 
-t = int( argv[2] )
-min_size_t = int( argv[3] )
+#im = cv2.imread( argv[1], 0 )
+im = ndimage.imread( argv[1], 0 ) # image read as file array, grey scale image
+t = int( argv[2] ) # treshold for brightness 
+min_size_t = int( argv[3] ) # threshold for size 
+opat = argv[4]
 # circ_t = float( argv[4] )
 
-im = cv2.imread( argv[1], 0 )
 thr = ndimage.binary_fill_holes( im>t )
 lbls, n_lbls = ndimage.label( thr )
 l_sizes = ndimage.sum(thr, lbls, range(n_lbls + 1))
 
-mask_size = numpy.logical_or( l_sizes < min_size_t, l_sizes > 10*min_size_t )
+# play with these lines
+mask_size = numpy.logical_or( l_sizes < min_size_t, l_sizes > 10*min_size_t ) #increase 10
 thr[mask_size[lbls]] = 0
 
 objs, n_objs = ndimage.label( thr )
@@ -22,7 +25,7 @@ innew = numpy.zeros( (im.shape[0], im.shape[1], 3) )
 innew[:,:,0] = im
 innew[:,:,1] = (objs>0)*255
 
-misc.imsave( "o.png", innew )
+misc.imsave( opat, innew )
 
 i=1
 for o in ndimage.find_objects( objs ):

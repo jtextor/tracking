@@ -1,10 +1,17 @@
 #!/bin/bash
 
-echo Step 1
-bash segment.sh > positions.txt	# must change name of files in segment.sh
+i=1
+while [ -d input/$i ] ; do
+	echo Step 1
+	bash segment.sh $i	# must change name of files in segment.sh
 
-echo Step 2
-python link-positions.py positions.txt 4 > tracks.txt
+	echo Step 2
+	echo input/$i-positions.txt 
+	python link-positions.py input/$i-positions.txt 1.9 > input/$i-tracks.txt
 
-echo Step 3
-bash resort-tracks.sh tracks.txt > tracks-final.txt 
+	echo Step 3
+	bash resort-tracks.sh input/$i-tracks.txt > input/$i-tracks-final.txt 
+	
+	i=$((i+1))  
+	exit
+done
